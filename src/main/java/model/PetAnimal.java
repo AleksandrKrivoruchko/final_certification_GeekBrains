@@ -38,4 +38,9 @@ public class PetAnimal extends Animal implements IAnimal{
         SimpleDateFormat format = new SimpleDateFormat("M");
         return Integer.parseInt(format.format(date));
     }
+
+    public String toString() {
+        return String.format("Имя: %s  дата рождения: %s",
+                this.getName(), this.formatDate());
+    }
 }

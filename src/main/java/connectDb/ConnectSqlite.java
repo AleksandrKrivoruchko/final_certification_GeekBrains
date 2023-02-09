@@ -1,11 +1,11 @@
 package connectDb;
 
 import model.IAnimal;
+import model.PetAnimal;
+import repository.RepositoryPetAnimal;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.util.Date;
 
 public class ConnectSqlite implements IConnectDb{
     private  Connection connection;
@@ -93,5 +93,23 @@ public class ConnectSqlite implements IConnectDb{
             return false;
         }
         return true;
+    }
+
+    public String select() {
+        RepositoryPetAnimal repository = new RepositoryPetAnimal();
+        try {
+            st = connection.createStatement();
+            ResultSet rs = st.executeQuery("SELECT * FROM " + nameTable);
+            while (rs.next()) {
+                repository.add(rs.getInt("id"));
+                String animalName = rs.getString("animal_name");
+                String birthday = rs.getString("birthday");
+                repository.add(new PetAnimal(animalName, birthday));
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+        return repository.toString();
     }
 }
