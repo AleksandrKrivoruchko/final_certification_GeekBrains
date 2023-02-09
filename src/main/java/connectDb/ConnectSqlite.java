@@ -106,6 +106,7 @@ public class ConnectSqlite implements IConnectDb{
                 String birthday = rs.getString("birthday");
                 repository.add(new PetAnimal(animalName, birthday));
             }
+            st.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
             return null;

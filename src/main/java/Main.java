@@ -1,4 +1,5 @@
 import connectDb.ConnectSqlite;
+import connectDb.IConnectDb;
 import model.Animal;
 import model.PetAnimal;
 
@@ -10,7 +11,7 @@ public class Main {
 //        PetAnimal cat = new PetAnimal("Сёма", "28.12.2016");
 //        System.out.println(cat.formatDate());
 //        System.out.println(cat.getAge());
-        ConnectSqlite cs = new ConnectSqlite("my_database.db", "animal");
+        IConnectDb cs = new ConnectSqlite("my_database.db", "animal");
         cs.connectDb();
 //        cs.createTable();
 //        cs.add(cat);

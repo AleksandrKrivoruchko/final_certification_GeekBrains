@@ -9,4 +9,6 @@ public interface IConnectDb {
 
     boolean add(IAnimal animal);
     boolean delete(int id);
+
+    String select();
 }
