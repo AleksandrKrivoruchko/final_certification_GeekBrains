@@ -14,7 +14,7 @@ public class Main {
         cs.connectDb();
 //        cs.createTable();
 //        cs.add(cat);
-        cs.delete(2);
+        System.out.println(cs.select());
         System.out.println(cs.close());
 
     }

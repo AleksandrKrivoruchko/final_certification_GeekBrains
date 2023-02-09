@@ -25,6 +25,7 @@ public class RepositoryPetAnimal {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i< listId.size(); i++) {
             sb.append("id: ").append(listId.get(i))
+                    .append("  ")
                     .append(listPetAnimals.get(i))
                     .append("\n");
         }
