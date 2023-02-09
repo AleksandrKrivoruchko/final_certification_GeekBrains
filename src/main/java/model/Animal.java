@@ -1,8 +1,10 @@
 package model;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public abstract class Animal {
+public class Animal {
     private String name;
     private Date birthday;
 
@@ -22,5 +24,18 @@ public abstract class Animal {
         this.birthday = birthday;
     }
 
-    public abstract int getAge();
+    public void setBirthday(String birthday) {
+        SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
+        try {
+            Date date = format.parse(birthday);
+            this.birthday = date;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public String formatDate() {
+        SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
+        return format.format(birthday);
+    }
 }

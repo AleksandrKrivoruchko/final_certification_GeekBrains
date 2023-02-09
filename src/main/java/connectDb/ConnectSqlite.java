@@ -1,5 +1,7 @@
 package connectDb;
 
+import model.IAnimal;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -11,8 +13,9 @@ public class ConnectSqlite implements IConnectDb{
     private String nameDb;
     private String nameTable;
 
-    public ConnectSqlite(String nameDb) {
+    public ConnectSqlite(String nameDb, String nameTable) {
         this.nameDb = nameDb;
+        this.nameTable = nameTable;
     }
 
     public boolean connectDb() {
@@ -45,8 +48,8 @@ public class ConnectSqlite implements IConnectDb{
     }
 
     @Override
-    public boolean createTable(String table) {
-        String sql = "CREATE TABLE " + table +
+    public boolean createTable() {
+        String sql = "CREATE TABLE " + nameTable +
                 "(id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "animal_name TEXT NOT NULL, " +
                 "birthday TEXT NOT NULL)";
@@ -58,7 +61,37 @@ public class ConnectSqlite implements IConnectDb{
             ex.printStackTrace();
             return false;
         }
-        nameTable = table;
+        return true;
+    }
+
+    public boolean add(IAnimal animal) {
+        String sql = "INSERT INTO " + nameTable + "(animal_name, birthday) " +
+                "VALUES ('" + animal.getName() +"', '" +
+                animal.formatDate() + "')";
+//        System.out.println(sql);
+        try {
+            st = connection.createStatement();
+            st.executeUpdate(sql);
+            st.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    public boolean delete(int id) {
+        String sql = "DELETE FROM " + nameTable +
+                " WHERE id=" + id + ";";
+        System.out.println(sql);
+        try {
+            st = connection.createStatement();
+            st.executeUpdate(sql);
+            st.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
         return true;
     }
 }
