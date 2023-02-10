@@ -6,15 +6,17 @@ import java.util.Date;
 public class PetAnimal extends Animal implements IAnimal{
     private int age;
 
-    public PetAnimal(String name, Date birthday) {
+    public PetAnimal(String animal, String name, Date birthday) {
         super();
+        super.setAnimal(animal);
         super.setName(name);
         super.setBirthday(birthday);
         setAge();
     }
 
-    public PetAnimal(String name, String birthday) {
+    public PetAnimal(String animal, String name, String birthday) {
         super();
+        super.setAnimal(animal);
         super.setName(name);
         super.setBirthday(birthday);
         setAge();
@@ -40,7 +42,7 @@ public class PetAnimal extends Animal implements IAnimal{
     }
 
     public String toString() {
-        return String.format("Имя: %s  дата рождения: %s",
-                this.getName(), this.formatDate());
+        return String.format("Животное: %s  Имя: %s  дата рождения: %s",
+                this.getAnimal(), this.getName(), this.formatDate());
     }
 }

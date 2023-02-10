@@ -2,13 +2,8 @@ package connectDb;
 
 import model.IAnimal;
 
-public interface IConnectDb {
+public interface IConnectDb extends ISQLRequest{
     boolean connectDb();
     boolean close();
-    boolean createTable();
 
-    boolean add(IAnimal animal);
-    boolean delete(int id);
-
-    String select();
 }

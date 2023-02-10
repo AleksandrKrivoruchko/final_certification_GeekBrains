@@ -51,6 +51,7 @@ public class ConnectSqlite implements IConnectDb{
     public boolean createTable() {
         String sql = "CREATE TABLE " + nameTable +
                 "(id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "animal TEXT NOT NULL," +
                 "animal_name TEXT NOT NULL, " +
                 "birthday TEXT NOT NULL)";
         try {
@@ -65,10 +66,10 @@ public class ConnectSqlite implements IConnectDb{
     }
 
     public boolean add(IAnimal animal) {
-        String sql = "INSERT INTO " + nameTable + "(animal_name, birthday) " +
-                "VALUES ('" + animal.getName() +"', '" +
+        String sql = "INSERT INTO " + nameTable + "(animal, animal_name, birthday) " +
+                "VALUES ('" + animal.getAnimal()  + "', '" +
+                animal.getName() +"', '" +
                 animal.formatDate() + "')";
-//        System.out.println(sql);
         try {
             st = connection.createStatement();
             st.executeUpdate(sql);
@@ -83,7 +84,23 @@ public class ConnectSqlite implements IConnectDb{
     public boolean delete(int id) {
         String sql = "DELETE FROM " + nameTable +
                 " WHERE id=" + id + ";";
-        System.out.println(sql);
+        try {
+            st = connection.createStatement();
+            st.executeUpdate(sql);
+            st.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public boolean update(int id, IAnimal animal) {
+        String sql = "UPDATE " + nameTable + " SET animal='"
+                + animal.getAnimal() + "', animal_name='"
+                + animal.getName() + "', birthday='"
+                + animal.formatDate() + "' WHERE id=" + id;
         try {
             st = connection.createStatement();
             st.executeUpdate(sql);
@@ -102,9 +119,10 @@ public class ConnectSqlite implements IConnectDb{
             ResultSet rs = st.executeQuery("SELECT * FROM " + nameTable);
             while (rs.next()) {
                 repository.add(rs.getInt("id"));
+                String animal = rs.getString("animal");
                 String animalName = rs.getString("animal_name");
                 String birthday = rs.getString("birthday");
-                repository.add(new PetAnimal(animalName, birthday));
+                repository.add(new PetAnimal(animal, animalName, birthday));
             }
             st.close();
         } catch (SQLException ex) {
