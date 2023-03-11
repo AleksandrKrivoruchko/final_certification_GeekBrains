@@ -13,6 +13,14 @@
 # IdeaProject
 ./target/*
 
+# Eclipce
+./target/*
+.classpath
+.project
+./.settings/*
+.settings/*
+target/*
+
 # Package Files #
 *.jar
 *.war
